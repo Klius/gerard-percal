@@ -12,8 +12,22 @@ end
 function findFX(name)
   local pos = -1
   for i=1,#appliedFX do
-    if name==appliedFX then
+    if name==appliedFX[i] then
       pos = i
     end
   end
+  return pos
+end
+
+function getAnimations(sprite,width,height)
+  local spritesheet = {}
+  local i = 1
+  local y = 0
+  local x = 0
+  while x < sprite:getWidth() do
+    spritesheet[i] = love.graphics.newQuad(x,y,width,height,sprite:getDimensions())
+    x = x+width
+    i = i+1
+  end
+  return spritesheet
 end
