@@ -1,6 +1,8 @@
 Gerard = Object:extend()
 
-function Gerard:new(img)
+function Gerard:new(img,x,y)
+  self.x = x or 256
+  self.y = y or love.graphics.getHeight()-256
   self.psystem = love.graphics.newParticleSystem(img, 500)
 	self.psystem:setParticleLifetime(0.3, 10) -- Particles live at least 2s and at most 5s.
 	self.psystem:setEmissionRate(20)
@@ -14,7 +16,7 @@ function Gerard:update(dt)
 end
 
 function Gerard:draw()
-  love.graphics.draw(self.psystem, love.graphics.getWidth() * 0.5, love.graphics.getHeight() * 0.5)
+  love.graphics.draw(self.psystem, self.x, self.y)
 end
 
 function Gerard:changeColor()
@@ -25,4 +27,8 @@ function Gerard:changeColor()
     deb = deb..i..": "..colors[i].."#"
   end
   self.psystem:setColors(colors[1],colors[2],colors[3],1,colors[4],colors[5],colors[6],0)
+end
+function Gerard:shower()
+  self.psystem:emit(800)
+  self.psystem:setLinearAcceleration(math.random(0,-20), math.random(0,-20), math.random(0,20), math.random(0,20))
 end

@@ -1,13 +1,14 @@
 Button = Object:extend()
 
-function Button:new()
-  self.backImage = love.graphics.newImage("assets/buttonplaceholder.png")
-  self.frames = getAnimations(self.backImage,128,128)
+function Button:new(img,x,y)
+  self.x = x or 0
+  self.width = 128
+  self.y = y or 0
+  self.backImage = love.graphics.newImage(img or "assets/button-color.png")
+  self.frames = getAnimations(self.backImage,self.width,self.width)
   self.isPressed = false
   self.isSwitch = false
   self.pressCounter = 0
-  self.x = 0
-  self.y = 0
   self.action = function () print("action") end
   self.inaction = function() print("inaction") end
 end
