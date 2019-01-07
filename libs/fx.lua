@@ -8,7 +8,7 @@ fx = { echo=  {
       },
       distor= {
         type = 'distortion',
-        gain = .5,
-        edge = .50,
+        gain = .3,
+        edge = .75,
       }
 }

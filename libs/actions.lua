@@ -4,6 +4,7 @@ function modPitch(num)
     pitch = 0.2
   end
   song:setPitch(pitch)
+  changeGerardSpeed(pitch)
 end
 function multiply(mult)
 
@@ -30,4 +31,30 @@ function getAnimations(sprite,width,height)
     i = i+1
   end
   return spritesheet
+end
+
+function addGerard()
+  local x = math.random(128,love.graphics.getWidth()-128);
+  local y = math.random(0,love.graphics.getHeight()-128);
+  local ger = Gerard(img,x,y)
+  ger:changeSpeed(song:getPitch()*20)
+  ger:changeColor()
+  table.insert(gerards,ger)
+end
+
+function lessGerard()
+  table.remove(gerards,#gerards-1)
+end
+
+function changeColor()
+  for i=1,#gerards do
+    gerards[i]:changeColor()
+  end
+end
+
+function changeGerardSpeed(pitch)
+  local speed = pitch *20
+  for i=1,#gerards do
+    gerards[i]:changeSpeed(speed)
+  end
 end

@@ -6,6 +6,8 @@ require "objects/gerard"
 require "objects/button"
 
 function love.load()
+  moonshine = require "libs/moonshine"
+  effect = moonshine(moonshine.effects.scanlines)
   love.audio.setEffect('echo', 
     {
       type = 'echo',
@@ -17,14 +19,14 @@ function love.load()
     })
   love.audio.setEffect('distor', {
     type = 'distortion',
-    gain = .5,
-    edge = .50,
+    gain = .3,
+    edge = .100,
   })
   img = love.graphics.newImage('assets/ger1.png')
   gero = Gerard(img)
   appliedFX = {}
   gerards = {}
-  --todofor i=0,2
+  table.insert(gerards,gero)
   song = love.audio.newSource( "assets/hola.ogg", "static" )
   song:setLooping(true)
   song:play()
@@ -33,17 +35,25 @@ function love.load()
 
 end
 function love.update(dt)
+  for i=1,#gerards do
+    gerards[i]:update(dt)
+  end
   gero:update(dt)
   for i=1,#buttons do
     buttons[i]:update(dt)
   end
 end
 function love.draw()
-  gero:draw()
+  effect(function()
+    for i=1,#gerards do
+      gerards[i]:draw()
+    end
+  end)
   for i=1,#buttons do
     buttons[i]:draw()
   end
   love.graphics.print("FPS:"..tostring(love.timer.getFPS()))
+  love.graphics.print("Gerards:"..#gerards,60,0)
 end
 function love.keypressed(key,scancode,isrepeat)
   if key == "up" then
@@ -56,10 +66,10 @@ function love.keypressed(key,scancode,isrepeat)
     
   end
   if key == "right" then
-    activateEffect("distor")
+    
   end
   if key == "space" then
-    gero:changeColor()
+    
   end
 end
 
@@ -91,13 +101,13 @@ end
 function buttonInit()
   h=love.graphics.getHeight()
   but = Button(nil,0,h-512)
-  but.action= function () gero:changeColor() end
+  but.action= function () changeColor() end
   table.insert(buttons,but)
   but = Button("assets/button-morejeff.png",0,h-384)
-  but.action= function () gero:changeColor() end
+  but.action= function () addGerard() end
   table.insert(buttons,but)
   but = Button("assets/button-lessjeff.png",0,h-256)
-  but.action= function () gero:changeColor() end
+  but.action= function () changeColor() end
   table.insert(buttons,but)
   but = Button("assets/button-shower.png",0,h-128)
   but.action= function () gero:shower() end
@@ -112,6 +122,11 @@ function buttonInit()
   but = Button("assets/button-echo.png",384,h-128)
   but.action= function () activateEffect("echo") end
   but.inaction = function() activateEffect("echo") end
+  but.isSwitch = true
+  table.insert(buttons,but)
+  but = Button("assets/button-distor.png",512,h-128)
+  but.action= function () activateEffect("distor") end
+  but.inaction = function() activateEffect("distor") end
   but.isSwitch = true
   table.insert(buttons,but)
 end
