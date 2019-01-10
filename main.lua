@@ -107,7 +107,7 @@ function buttonInit()
   but.action= function () addGerard() end
   table.insert(buttons,but)
   but = Button("assets/button-lessjeff.png",0,h-256)
-  but.action= function () changeColor() end
+  but.action= function () lessGerard() end
   table.insert(buttons,but)
   but = Button("assets/button-shower.png",0,h-128)
   but.action= function () gero:shower() end

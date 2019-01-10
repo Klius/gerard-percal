@@ -9,6 +9,9 @@ function Gerard:new(img,x,y)
 	self.psystem:setSizeVariation(1)
 	self.psystem:setLinearAcceleration(-20, -20, 20, 20) -- Random movement in all directions.
 	self.psystem:setColors(255, 0, 0, 255, 0, 255, 0, 0) -- Fade to transparency.
+  self.xVel = math.random(10,100)
+  self.yVel = math.random(10,100)
+  self.isMoving = false
 end
 
 function Gerard:update(dt)
@@ -34,4 +37,11 @@ function Gerard:shower()
 end
 function Gerard:changeSpeed(speed)
   self.psystem:setLinearAcceleration(-speed, -speed, speed, speed)
+end
+function Gerard:activateMovement()
+  if self.isMoving then
+    self.isMoving = false
+  else
+    self.isMoving = true
+  end
 end

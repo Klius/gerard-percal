@@ -43,7 +43,7 @@ function addGerard()
 end
 
 function lessGerard()
-  table.remove(gerards,#gerards-1)
+  table.remove(gerards,#gerards)
 end
 
 function changeColor()
