@@ -4,7 +4,7 @@ require "libs/actions"
 --OBJECTS
 require "objects/gerard"
 require "objects/button"
-
+require "objects/background"
 function love.load()
   moonshine = require "libs/moonshine"
   effect = moonshine(moonshine.effects.scanlines)
@@ -32,7 +32,7 @@ function love.load()
   song:play()
   buttons = {}
   buttonInit()
-
+  background = Background()
 end
 function love.update(dt)
   for i=1,#gerards do
@@ -42,34 +42,37 @@ function love.update(dt)
   for i=1,#buttons do
     buttons[i]:update(dt)
   end
+  background:update(dt)
 end
+
 function love.draw()
-  effect(function()
+  background:draw()
+  --effect(function()
     for i=1,#gerards do
       gerards[i]:draw()
     end
-  end)
+  --end)
+  love.graphics.setColor(223/255, 113/255, 38/255,1)
+  love.graphics.rectangle("fill",0,0,128,love.graphics.getHeight())
+  love.graphics.rectangle("fill",0,love.graphics.getHeight()-128,love.graphics.getWidth(),128)
+  love.graphics.setColor(1,1,1,1)
   for i=1,#buttons do
     buttons[i]:draw()
   end
   love.graphics.print("FPS:"..tostring(love.timer.getFPS()))
   love.graphics.print("Gerards:"..#gerards,60,0)
 end
+
 function love.keypressed(key,scancode,isrepeat)
   if key == "up" then
-    
   end
   if key == "down" then
-    
   end
   if key == "left" then
-    
   end
   if key == "right" then
-    
   end
   if key == "space" then
-    
   end
 end
 
@@ -110,7 +113,9 @@ function buttonInit()
   but.action= function () lessGerard() end
   table.insert(buttons,but)
   but = Button("assets/button-shower.png",0,h-128)
-  but.action= function () gero:shower() end
+  but.isSwitch = true
+  but.action= function () moveGerards() end
+  but.inaction= function () moveGerards() end
   table.insert(buttons,but)
   --AUDIO BUTTONS
   but = Button("assets/button-pitchdown.png",128,h-128)

@@ -39,6 +39,7 @@ function addGerard()
   local ger = Gerard(img,x,y)
   ger:changeSpeed(song:getPitch()*20)
   ger:changeColor()
+  ger.isMoving = buttons[4].isPressed
   table.insert(gerards,ger)
 end
 
@@ -56,5 +57,11 @@ function changeGerardSpeed(pitch)
   local speed = pitch *20
   for i=1,#gerards do
     gerards[i]:changeSpeed(speed)
+  end
+end
+
+function moveGerards()
+  for i = 1, #gerards do
+    gerards[i]:activateMovement()
   end
 end

@@ -9,12 +9,15 @@ function Gerard:new(img,x,y)
 	self.psystem:setSizeVariation(1)
 	self.psystem:setLinearAcceleration(-20, -20, 20, 20) -- Random movement in all directions.
 	self.psystem:setColors(255, 0, 0, 255, 0, 255, 0, 0) -- Fade to transparency.
-  self.xVel = math.random(10,100)
-  self.yVel = math.random(10,100)
+  self.xVel = math.random(50,200)
+  self.yVel = math.random(50,200)
   self.isMoving = false
 end
 
 function Gerard:update(dt)
+  if self.isMoving then
+    self:move(dt)
+  end
   self.psystem:update(dt)
 end
 
@@ -43,5 +46,24 @@ function Gerard:activateMovement()
     self.isMoving = false
   else
     self.isMoving = true
+  end
+end
+
+function Gerard:move(dt)
+  self.x = self.x + self.xVel*dt
+  if self.x < 128 then
+    self.x = 128
+    self.xVel = self.xVel * -1
+  elseif self.x+128 > love.graphics.getWidth() then
+    self.x = love.graphics.getWidth()-128
+    self.xVel = self.xVel * -1
+  end
+  self.y = self.y + self.yVel*dt
+  if self.y-140 <= 0 then
+    self.y = 140
+    self.yVel = self.yVel * -1
+  elseif self.y +140 > love.graphics.getHeight() then
+    self.y = love.graphics.getHeight()-140
+    self.yVel = self.yVel * -1
   end
 end
