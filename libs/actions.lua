@@ -5,10 +5,9 @@ function modPitch(num)
   end
   song:setPitch(pitch)
   changeGerardSpeed(pitch)
+  changeBackgroundSpeed(pitch)
 end
-function multiply(mult)
 
-end
 
 function findFX(name)
   local pos = -1
@@ -33,9 +32,9 @@ function getAnimations(sprite,width,height)
   return spritesheet
 end
 
-function addGerard()
-  local x = math.random(128,love.graphics.getWidth()-128);
-  local y = math.random(0,love.graphics.getHeight()-128);
+function addGerard(x,y)
+  local x = x or math.random(128,love.graphics.getWidth()-128);
+  local y = y or math.random(0,love.graphics.getHeight()-128);
   local ger = Gerard(img,x,y)
   ger:changeSpeed(song:getPitch()*20)
   ger:changeColor()
@@ -60,6 +59,10 @@ function changeGerardSpeed(pitch)
     gerards[i]:changeSpeed(speed)
     gerards[i].pitch = pitch
   end
+end
+
+function changeBackgroundSpeed(pitch)
+  background.pitch = pitch
 end
 
 function moveGerards()

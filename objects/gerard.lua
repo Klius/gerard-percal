@@ -13,6 +13,9 @@ function Gerard:new(img,x,y)
   self.yVel = math.random(-200,200)
   self.pitch = 1
   self.isMoving = false
+  self.iepa = love.audio.newSource( "assets/iepa.ogg", "static" )
+  self.iepa:setVolume(0.5)
+  self.iepa:play()
 end
 
 function Gerard:update(dt)

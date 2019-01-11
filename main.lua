@@ -61,6 +61,7 @@ function love.draw()
   end
   love.graphics.print("FPS:"..tostring(love.timer.getFPS()))
   love.graphics.print("Gerards:"..#gerards,60,0)
+  love.graphics.print("backspeed:"..background.speed/background.pitch,0,20)
 end
 
 function love.keypressed(key,scancode,isrepeat)
@@ -91,14 +92,19 @@ function love.mousepressed(x,y,button,istouch)
   checkCollisions(x,y)
 end
 function checkCollisions(x,y)
+  clickedButton = false
   for i=1,#buttons do
     if x >buttons[i].x and
       x < buttons[i].x+buttons[i].width and
       y > buttons[i].y and
       y < buttons[i].y+buttons[i].width then
         buttons[i]:click()
+        clickedButton = true
     end
   end
+  if clickedButton == false then
+    addGerard(x,y)
+  end 
 end
 
 function buttonInit()
