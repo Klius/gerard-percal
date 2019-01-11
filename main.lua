@@ -112,7 +112,7 @@ function buttonInit()
   but = Button("assets/button-lessjeff.png",0,h-256)
   but.action= function () lessGerard() end
   table.insert(buttons,but)
-  but = Button("assets/button-shower.png",0,h-128)
+  but = Button("assets/button-move.png",0,h-128)
   but.isSwitch = true
   but.action= function () moveGerards() end
   but.inaction= function () moveGerards() end

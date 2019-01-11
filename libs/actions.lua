@@ -41,6 +41,7 @@ function addGerard()
   ger:changeColor()
   ger.isMoving = buttons[4].isPressed
   table.insert(gerards,ger)
+  changeGerardSpeed(song:getPitch())
 end
 
 function lessGerard()
@@ -57,6 +58,7 @@ function changeGerardSpeed(pitch)
   local speed = pitch *20
   for i=1,#gerards do
     gerards[i]:changeSpeed(speed)
+    gerards[i].pitch = pitch
   end
 end
 
