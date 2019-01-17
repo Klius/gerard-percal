@@ -5,6 +5,7 @@ require "libs/actions"
 require "objects/gerard"
 require "objects/button"
 require "objects/background"
+require "objects/fps"
 function love.load()
   moonshine = require "libs/moonshine"
   effect = moonshine(moonshine.effects.scanlines)
@@ -33,16 +34,17 @@ function love.load()
   buttons = {}
   buttonInit()
   background = Background()
+  fpsbar = FPSbar()
 end
 function love.update(dt)
   for i=1,#gerards do
     gerards[i]:update(dt)
   end
-  gero:update(dt)
   for i=1,#buttons do
     buttons[i]:update(dt)
   end
   background:update(dt)
+  fpsbar:update()
 end
 
 function love.draw()
@@ -59,9 +61,7 @@ function love.draw()
   for i=1,#buttons do
     buttons[i]:draw()
   end
-  love.graphics.print("FPS:"..tostring(love.timer.getFPS()))
-  love.graphics.print("Gerards:"..#gerards,60,0)
-  love.graphics.print("backspeed:"..background.speed/background.pitch,0,20)
+  fpsbar:draw()
 end
 
 function love.keypressed(key,scancode,isrepeat)
@@ -89,26 +89,42 @@ function activateEffect(name)
 end
 
 function love.mousepressed(x,y,button,istouch)
-  checkCollisions(x,y)
+  checkCollisions(x,y,button)
 end
-function checkCollisions(x,y)
+function checkCollisions(x,y,button)
   clickedButton = false
-  for i=1,#buttons do
+  for i=#buttons,1,-1 do
     if x >buttons[i].x and
       x < buttons[i].x+buttons[i].width and
       y > buttons[i].y and
       y < buttons[i].y+buttons[i].width then
         buttons[i]:click()
         clickedButton = true
+        break
     end
   end
   if clickedButton == false then
-    addGerard(x,y)
+    if button == 2 then
+      for i=#gerards,1,-1 do
+        if x >gerards[i].x-128 and
+        x < gerards[i].x-128+img:getWidth() and
+        y > gerards[i].y-140 and
+        y < gerards[i].y-140+img:getHeight() then
+          table.remove(gerards,i)
+          break
+        end
+      end
+    else
+      addGerard(x,y)
+    end
   end 
 end
 
 function buttonInit()
   h=love.graphics.getHeight()
+  but = Button("assets/button-background.png",0,h-600)
+  but.action= function () background:changeMode() end
+  table.insert(buttons,but)
   but = Button(nil,0,h-512)
   but.action= function () changeColor() end
   table.insert(buttons,but)
@@ -139,5 +155,8 @@ function buttonInit()
   but.action= function () activateEffect("distor") end
   but.inaction = function() activateEffect("distor") end
   but.isSwitch = true
+  table.insert(buttons,but)
+  but = Button("assets/button-reset.png",640,h-128)
+  but.action= function () reset() end
   table.insert(buttons,but)
 end
