@@ -14,7 +14,7 @@ Tras instalar LÖVE haz doble click a percal.love
 
 # Como funciona esto
 
-Botón derecho del mouse -> borrar Jeffreys
-Botón Izquierdo del mouse -> Añadir Jeffreys i apretar botoncicos
+* Botón derecho del mouse -> borrar Jeffreys
+* Botón Izquierdo del mouse -> Añadir Jeffreys i apretar botoncicos
 
 A disfrutar ! :beers:
