@@ -1,5 +1,5 @@
 # Hem tingut un problema al estudi
-
+![Un día a l'oficina](https://raw.githubusercontent.com/Klius/gerard-percal/master/docs/foto.png)
 > És un percal, important
 
 # Instalación
