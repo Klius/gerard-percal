@@ -1,10 +1,10 @@
 fx = { echo=  {
         type = 'echo',
         delay = 1,
-        tapdelay = 5,
+        tapdelay = 6,
         damping = 0,
         feedback = 1,
-        spread = 3
+        spread = 2
       },
       distor= {
         type = 'distortion',

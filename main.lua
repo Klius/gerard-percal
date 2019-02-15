@@ -1,6 +1,7 @@
 Object = require "libs/classic"
 require "libs/fx"
 require "libs/actions"
+--require "libs/scrollingstring"
 --OBJECTS
 require "objects/gerard"
 require "objects/button"
@@ -35,6 +36,9 @@ function love.load()
   buttonInit()
   background = Background()
   fpsbar = FPSbar()
+  --scrolling text
+  --str = ScrollingString("Is this a long string or what? what is happening i don't know i'm out you fucker",300,300)
+  
 end
 function love.update(dt)
   for i=1,#gerards do
@@ -45,6 +49,7 @@ function love.update(dt)
   end
   background:update(dt)
   fpsbar:update()
+  --str:update(dt)
 end
 
 function love.draw()
@@ -62,6 +67,7 @@ function love.draw()
     buttons[i]:draw()
   end
   fpsbar:draw()
+  --str:draw()
 end
 
 function love.keypressed(key,scancode,isrepeat)
